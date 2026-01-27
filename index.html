@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+   
+   
+</head>
+<body>
+    <section class="container max-w-5xl mx-auto py-12"> 
+<h1 class="text-center text-5xl mt-12 font-bold">Lets play !!!</h1>
+<div class="grid grid-cols-5 mt-12">
+
+    <!-- user btn  -->
+    <div class="text-center" >
+        <div class="relative">
+            <p class="text-2xl font-semibold">Your Score</p>
+            <p id="userScore" class="text-5xl font-bold mt-3">0</p>
+            <div id="userFireWork" class="firework absolute hidden"></div>
+        </div>
+        <div class="mt-4">
+            <button disabled onclick="select(1)" class="gameControl userControl disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6' border-2 border-gray-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200 ">
+                <img src="./asset/rock.svg" alt="" class="w-16 mx-auto">
+                <p class="pt-1 text-3xl font-thin">Rock</p>
+            </button>
+            <button disabled onclick="select(2)" class="gameControl userControl disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6' border-2 border-gray-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200 ">
+                <img src="./asset/paper.svg" alt="" class="w-16 mx-auto">
+                <p class="pt-1 text-3xl font-thin">Paper</p>
+            </button>
+            <button disabled onclick="select(3)" class="gameControl userControl disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6' border-2 border-gray-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200 ">
+                <img src="./asset/scissor.svg" alt="" class="w-16 mx-auto">
+                <p class="pt-1 text-3xl font-thin">scissor</p>
+            </button>
+        </div>
+    </div>
+
+    <!-- center box -->
+    <div class="col-span-3 flex items-center">
+        <div class="w-full text-center px-10">
+            <p id="roundID" class="text-lg uppercase font-bold mb-6 hidden">Round - <span>1</span></p>
+            <p class="text-5xl mb-4 hidden"id="CountDown">4</p>
+            
+
+            <div id="roundSelectContainer">
+                <label for="roundSelect">Choose Rounds</label>
+                  <select id="roundSelect" class="mt-2 mb-6 w-full border-2 border-gray-700 rounded-2xl p-4 text-center text-lg max-w-xs flex mx-auto">
+                    <option value="">- Choose One -</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                </select>
+            </div>
+
+          <!-- btn for start and game playagin -->
+               <button onclick="startGame()" id="playButton" class="flex bg-purple-500 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-purple-600 active:bg-purple-900 transition-all duration-200 hover:shadow-lg">Start</button>
+               <button onclick="nextRound()" id="nextRoundButton" class="flex bg-purple-500 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-purple-600 active:bg-purple-900 transition-all duration-200 hover:shadow-lg hidden">Play</button>
+               <button onclick="init()" id="initButton" class="flex bg-purple-500 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-purple-600 active:bg-purple-900 transition-all duration-200 hover:shadow-lg hidden">Play Again</button>
+            <p id="errorMessagePara" class="text-red-600"></p>
+            </div>
+    </div>
+
+    <!-- computer button -->
+    <div class="text-center">
+        <div class="relative">
+            <p class="text-2xl font-semibold">Computer Score</p>
+            <p id="computerscore" class="text-5xl font-bold mt-3">0</p>
+            <div id="ComputerFirework" class="firework absolute hidden"></div>
+        </div>
+    <div class="mt-4">
+        <button disabled class="gameControl ComputerControl disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6' border-2 border-gray-200  rounded-3xl transition-all duration-200  ">
+            <img src="./asset/rock.svg" alt="" class="w-16 mx-auto">
+            <p class="pt-1 text-3xl font-thin">Rock</p>
+        </button>
+        <button disabled class="gameControl ComputerControl disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6' border-2 border-gray-200  rounded-3xl transition-all duration-200  ">
+            <img src="./asset/paper.svg" alt="" class="w-16 mx-auto">
+            <p class="pt-1 text-3xl font-thin">Paper</p>
+        </button>
+        <button disabled class="gameControl ComputerControl disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6' border-2 border-gray-200  rounded-3xl transition-all duration-200  ">
+            <img src="./asset/scissor.svg" alt="" class="w-16 mx-auto">
+            <p class="pt-1 text-3xl font-thin">scissor</p>
+        </button>
+    </div>
+   
+     </div>
+</div>
+
+<div class="flex justify-between">
+
+   
+        <button onclick="init()" class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200">Reset Game</button>
+        <button onclick="openPop()" class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200">How To Play </button>
+    
+     </div>
+</div>
+
+<!-- popup window -->
+
+<div id="popUp" class="hidden fixed w-full top-0 left-0 h-screen bg-black/50 flex justify-center items-center">
+<div class="max-w-3xl p-10 rounded-3xl shadow-md bg-white relative">
+    <button onclick="closePopup()" id="closeBtn" class="absolute right-5 top-5 text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+          
+          
+    </button>
+    <div class="my-2">
+        <table>
+           <tr >
+           
+            <td class="w-16 py-2 align-top font-semibold">Step 1</td>
+            <td class="py-2 text-gray-600">Choose Number of rounds using the dropdown</td>
+           </tr>
+           <tr>
+            <td  class="w-16 py-2 align-top font-semibold">Step 2</td>
+            <td class="py-2 text-gray-600">Click Start</td>
+           </tr>
+           <tr >
+            <td class="w-16 py-2 align-top font-semibold">Step 3</td>
+            <td class="py-2 text-gray-600">For each round there will be a 3 second CountDown , Once countdown turns <span class="font-bold">"00"</span>Choose your option(Rock,Paper,scissor..)</td>
+           </tr>
+           <tr>
+            <td  class="w-16 py-2 align-top font-semibold">Step 4</td>
+            <td class="py-2 text-gray-600">Click next Round tonpaly the next round</td>
+           </tr>
+        </table>
+        <table class="mx-auto mt-8">
+
+            <tr>
+                <td class="border border-slate-200 px-20 py-4">
+                    <div class="flex gap-2">
+                        <img src="./asset/rock.svg" alt="" class="mx-auto w-6">
+                        <span>vs</span>
+                        <img src="./asset/scissor.svg" alt="" class="mx-auto w-6">
+                    </div>
+                </td>
+                <td class="border border-slate-200 px-20 py-4">
+                    <div class="flex gap-2">
+                        <img src="./asset/rock.svg" alt="" class="mx-auto w-6">
+                        <span>Wins</span>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="border border-slate-200 px-20 py-4">
+                    <div class="flex gap-2">
+                        <img src="./asset/rock.svg" alt="" class="mx-auto w-6">
+                        <span>vs</span>
+                        <img src="./asset/paper.svg" alt="" class="mx-auto w-6">
+                    </div>
+                </td>
+                <td class="border border-slate-200 px-20 py-4">
+                    <div class="flex gap-2">
+                        <img src="./asset/paper.svg" alt="" class="mx-auto w-6">
+                        <span>Wins</span>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="border border-slate-200 px-20 py-4">
+                    <div class="flex gap-2">
+                        <img src="./asset/scissor.svg" alt="" class="mx-auto w-6">
+                        <span>vs</span>
+                        <img src="./asset/paper.svg" alt="" class="mx-auto w-6">
+                    </div>
+                </td>
+                <td class="border border-slate-200 px-20 py-4">
+                    <div class="flex gap-2">
+                        <img src="./asset/scissor.svg" alt="" class="mx-auto w-6">
+                        <span>Wins</span>
+         </div>
+                </td>
+            </tr>
+            
+        </table>
+            
+    </div>
+</div>
+</div>
+
+</section>
+
+   
+<script src="index.js"></script>
+</body>
+</html>
